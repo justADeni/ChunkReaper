@@ -1,0 +1,5 @@
+name: Chunkreaper
+version: '${project.version}'
+main: justadeni.chunkreaper.Chunkreaper
+api-version: 1.18
+description: culls unused and unloaded chunks to save precious memory space

@@ -1,5 +1,6 @@
 package justadeni.chunkreaper;
 
+import org.bukkit.Bukkit;
 import org.bukkit.block.CommandBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -7,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ChunkCommand implements CommandExecutor {
@@ -48,14 +50,27 @@ public class ChunkCommand implements CommandExecutor {
                 }
             }
             if (args.length == 3)
-                return false;
+                if (args[0].equalsIgnoreCase("world") &&
+                        (args[1].equalsIgnoreCase("add") ||
+                                args[1].equalsIgnoreCase("remove")) &&
+                                    (Bukkit.getWorld(args[2]) != null)){
+
+                    List<String> worlds = mainConfig().getStringList("IgnoreWorlds");
+                    if (args[1].equalsIgnoreCase("add")){
+                        if (!worlds.contains(args[2]))
+                            worlds.add(args[2]);
+                    } else {
+                        worlds.remove(args[2]);
+                    }
+                    mainConfig().set("IgnoreWorlds", worlds);
+                }
             if (args.length == 4)
                 return false;
             if (args.length == 5){
                 if (args[0].equalsIgnoreCase("region")) {
                     if (isNum(args[1]) && isNum(args[2]) && isNum(args[3]) && isNum(args[4])){
 
-                        String path = UUID.randomUUID() + ".";
+                        String path = "data." + UUID.randomUUID() + ".";
                         regionConfig().set(path + "x1", getNum(args[1]));
                         regionConfig().set(path + "z1", getNum(args[2]));
                         regionConfig().set(path + "x2", getNum(args[3]));

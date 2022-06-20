@@ -8,5 +8,8 @@ IgnoreRadius: 512
 OnlyPlayers: true
 # should the plugin not remove chunks in special regions
 # you can establish them via /chunkreaper region toggle
-# then define via /chunkreaper region x1 z1 x2 z2
+# then define via /chunkreaper region <x1> <z1> <x2> <z2>
 Regions: false
+# List of worlds where plugin will not work. can be added via
+# command /chunkreaper world add/remove <world> or config
+IgnoreWorlds: []

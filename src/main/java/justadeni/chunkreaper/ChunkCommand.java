@@ -11,8 +11,18 @@ import java.util.UUID;
 
 public class ChunkCommand implements CommandExecutor {
 
-    private static FileConfiguration mainConfig = ChunkReaper.instance.getConfig();
-    private static FileConfiguration regionConfig = ChunkReaper.config.getData();
+    //private static FileConfiguration mainConfig = ChunkReaper.instance.getConfig();
+    //private static FileConfiguration regionConfig = ChunkReaper.config.getData();
+    private ChunkReaper chunkReaper = new ChunkReaper();
+    private FileConfiguration mainConfig(){
+        return chunkReaper.getConfig();
+    }
+    private FileConfiguration regionConfig(){
+        return chunkReaper.config.getData();
+    }
+    private ChunkFile regionConfigData(){
+        return chunkReaper.config;
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("chunkreaper")){
@@ -23,14 +33,17 @@ public class ChunkCommand implements CommandExecutor {
             if (args.length == 0)
                 return false;
             if (args.length == 1)
-                return false;
+                if (args[0].equalsIgnoreCase("reload")){
+                    ChunkReaper.instance.reloadConfig();
+                    regionConfigData().reloadData();
+                }
             if (args.length == 2){
                 if (args[0].equalsIgnoreCase("setradius") && isNumPos(args[1]) ){
-                    mainConfig.set("IgnoreRadius", Integer.parseInt(args[1]));
+                    mainConfig().set("IgnoreRadius", Integer.parseInt(args[1]));
                 } else if (args[0].equalsIgnoreCase("region")){
                     if (args[1].equalsIgnoreCase("toggle")){
-                        boolean negate = !mainConfig.getBoolean("Regions");
-                        mainConfig.set("Regions", negate);
+                        boolean negate = !mainConfig().getBoolean("Regions");
+                        mainConfig().set("Regions", negate);
                     }
                 }
             }
@@ -43,10 +56,10 @@ public class ChunkCommand implements CommandExecutor {
                     if (isNum(args[1]) && isNum(args[2]) && isNum(args[3]) && isNum(args[4])){
 
                         String path = UUID.randomUUID() + ".";
-                        regionConfig.set(path + "x1", args[1]);
-                        regionConfig.set(path + "z1", args[2]);
-                        regionConfig.set(path + "x2", args[3]);
-                        regionConfig.set(path + "z2", args[4]);
+                        regionConfig().set(path + "x1", getNum(args[1]));
+                        regionConfig().set(path + "z1", getNum(args[2]));
+                        regionConfig().set(path + "x2", getNum(args[3]));
+                        regionConfig().set(path + "z2", getNum(args[4]));
                     }
                 }
             }

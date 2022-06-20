@@ -1,14 +1,11 @@
 package justadeni.chunkreaper.listeners;
 
-import justadeni.chunkreaper.Chunkreaper;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.generator.ChunkGenerator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChunkLoad implements Listener {
 
@@ -23,7 +20,6 @@ public class ChunkLoad implements Listener {
             e.getWorld().regenerateChunk(e.getChunk().getX(), e.getChunk().getZ());
         }
         */
-
             markedForDeletion.add(loc);
         }
     }

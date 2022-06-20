@@ -1,5 +1,10 @@
-name: Chunkreaper
+name: ChunkReaper
 version: '${project.version}'
-main: justadeni.chunkreaper.Chunkreaper
+main: justadeni.chunkreaper.ChunkReaper
 api-version: 1.18
-description: culls unused and unloaded chunks to save precious memory space
+description: culls unused and unloaded chunks to save precious disk space
+commands:
+  ChunkReaper:
+    usage: /<command>
+    description: used for various functions of ChunkReaper plugin
+    permission: chunkreaper.admin

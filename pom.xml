@@ -9,7 +9,7 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>Chunkreaper</name>
+    <name>ChunkReaper</name>
 
     <description>culls unused and unloaded chunks to save precious memory space</description>
     <properties>

@@ -1,6 +1,5 @@
 package justadeni.chunkreaper;
 
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -10,22 +9,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class ChunkFile {
-    private Chunkreaper plugin;
-    private File dataFile = null;
+    private ChunkReaper plugin;
+    private File configFile = null;
     private FileConfiguration fileConfiguration = null;
 
-    public ChunkFile(Chunkreaper plugin){
+    public ChunkFile(ChunkReaper plugin){
         this.plugin = plugin;
         saveDefaultData();
     }
 
     public void reloadData(){
-        if (dataFile == null){
-            dataFile = new File(plugin.getDataFolder(), "data.yml");
+        if (configFile == null){
+            configFile = new File(plugin.getDataFolder(), "regions.yml");
         }
-        fileConfiguration = YamlConfiguration.loadConfiguration(dataFile);
+        fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
 
-        InputStream defaultStream = plugin.getResource("data.yml");
+        InputStream defaultStream = plugin.getResource("regions.yml");
         if (defaultStream != null){
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
             fileConfiguration.setDefaults(defaultConfig);
@@ -40,17 +39,17 @@ public class ChunkFile {
     }
 
     public void saveData() throws IOException {
-        if (dataFile == null || fileConfiguration == null)
+        if (configFile == null || fileConfiguration == null)
             return;
 
-        getData().save(dataFile);
+        getData().save(configFile);
     }
 
     public void saveDefaultData(){
-        if (dataFile == null)
-            dataFile = new File(plugin.getDataFolder(), "data.yml");
+        if (configFile == null)
+            configFile = new File(plugin.getDataFolder(), "regions.yml");
 
-        if (!dataFile.exists())
-            plugin.saveResource("data.yml", false);
+        if (!configFile.exists())
+            plugin.saveResource("regions.yml", false);
     }
 }

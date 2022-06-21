@@ -1,5 +1,6 @@
-package justadeni.chunkreaper;
+package justadeni.chunkreaper.configs;
 
+import justadeni.chunkreaper.ChunkReaper;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 

@@ -1,5 +1,6 @@
 package justadeni.chunkreaper;
 
+import justadeni.chunkreaper.configs.ChunkFile;
 import justadeni.chunkreaper.listeners.BlockBreak;
 import justadeni.chunkreaper.listeners.BlockPlace;
 import justadeni.chunkreaper.listeners.ChunkLoad;

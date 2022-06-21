@@ -1,13 +1,15 @@
 package justadeni.chunkreaper;
 
+import justadeni.chunkreaper.configs.ChunkFile;
+import justadeni.chunkreaper.configs.ConfigsUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.block.CommandBlock;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.ObjectInputFilter;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,16 +38,22 @@ public class ChunkCommand implements CommandExecutor {
                 return false;
             if (args.length == 1)
                 if (args[0].equalsIgnoreCase("reload")){
-                    ChunkReaper.instance.reloadConfig();
-                    regionConfigData().reloadData();
+                    ConfigsUtils.save();
+                    ConfigsUtils.reload();
                 }
             if (args.length == 2){
                 if (args[0].equalsIgnoreCase("setradius") && isNumPos(args[1]) ){
                     mainConfig().set("IgnoreRadius", Integer.parseInt(args[1]));
+
+                    ConfigsUtils.save();
+                    ConfigsUtils.reload();
                 } else if (args[0].equalsIgnoreCase("region")){
                     if (args[1].equalsIgnoreCase("toggle")){
                         boolean negate = !mainConfig().getBoolean("Regions");
                         mainConfig().set("Regions", negate);
+
+                        ConfigsUtils.save();
+                        ConfigsUtils.reload();
                     }
                 }
             }
@@ -63,18 +71,27 @@ public class ChunkCommand implements CommandExecutor {
                         worlds.remove(args[2]);
                     }
                     mainConfig().set("IgnoreWorlds", worlds);
+
+                    ConfigsUtils.save();
+                    ConfigsUtils.reload();
                 }
             if (args.length == 4)
                 return false;
-            if (args.length == 5){
+            if (args.length == 5)
+                return false;
+            if (args.length == 6){
                 if (args[0].equalsIgnoreCase("region")) {
-                    if (isNum(args[1]) && isNum(args[2]) && isNum(args[3]) && isNum(args[4])){
+                    if (isNum(args[1]) && isNum(args[2]) && isNum(args[3]) && isNum(args[4]) && (Bukkit.getWorld(args[5]) != null)){
 
                         String path = "data." + UUID.randomUUID() + ".";
-                        regionConfig().set(path + "x1", getNum(args[1]));
-                        regionConfig().set(path + "z1", getNum(args[2]));
-                        regionConfig().set(path + "x2", getNum(args[3]));
-                        regionConfig().set(path + "z2", getNum(args[4]));
+                        regionConfig().set(path + "x1", getNum(args[1]) >> 4);
+                        regionConfig().set(path + "z1", getNum(args[2]) >> 4);
+                        regionConfig().set(path + "x2", getNum(args[3]) >> 4);
+                        regionConfig().set(path + "z2", getNum(args[4]) >> 4);
+                        regionConfig().set(path + "world", args[5]);
+
+                        ConfigsUtils.save();
+                        ConfigsUtils.reload();
                     }
                 }
             }

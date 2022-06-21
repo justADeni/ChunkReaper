@@ -2,10 +2,11 @@
 ###                   ChunkReaper config                     ###
 ################################################################
 
+# prefix of plugin texts
+prefix: "ChunkReaper: "
 # radius in blocks starting from spawn which should not be removed
+# set to 0 or -1 to remove
 IgnoreRadius: 512
-# should only players-loaded chunks be erased
-OnlyPlayers: true
 # should the plugin not remove chunks in special regions
 # you can establish them via /chunkreaper region toggle
 # then define via /chunkreaper region <x1> <z1> <x2> <z2>
